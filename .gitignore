@@ -1,3 +1,8 @@
+# Various PHP-related bins
+composer.phar
+behat.phar
+composer.lock
+
 # Bootstrap
 app/bootstrap*
 

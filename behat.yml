@@ -1,0 +1,14 @@
+# behat.yml
+default:
+    paths:
+        features: Features
+        bootstrap: %behat.paths.features%/bootstrap
+    formatter:
+        name:                       pretty
+        parameters:
+            decorated:              true
+            verbose:                true
+            time:                   true
+            language:               fr
+            output_path:            null
+            multiline_arguments:    true
