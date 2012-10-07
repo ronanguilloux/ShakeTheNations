@@ -1,8 +1,8 @@
-# features/recupereLesDonneesEnFonctionDunContexte.feature
+# features/RecupereLesDonneesEnFonctionDunContexte.feature
 # language: fr
 
 @api @flux @data @obligatoire
-Fonctionnalité: Récuperer les évènements sismiques en fonction d'une position
+Fonctionnalité: Récupérer les évènements sismiques en fonction d'une position
     Afin d'être alerté de tout risque sismique
     En tant qu'utilisateur final localisé
     Je dois pouvoir récupérer les évènements sismiques les plus récents et les plus proches

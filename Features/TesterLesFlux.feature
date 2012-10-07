@@ -1,4 +1,4 @@
-# features/testerLesFlux.feature
+# features/TesterLesFlux.feature
 # language: fr
 
 @api @flux @service @obligatoire

@@ -7,6 +7,7 @@ Summary
 
 ShakeTheNations: Latest Earthquakes Feeds Parser & Analyzer. Makes use of the [European Mediterranean Seismological Centre feeds](http://www.emsc-csem.org)
 
+Example of parsed RSS feed: http://www.emsc-csem.org/service/rss/rss.php?typ=emsc&min_lat=10&min_long=-30&max_long=65
 
 Quick install
 -------------
