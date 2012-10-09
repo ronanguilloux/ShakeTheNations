@@ -1,16 +1,37 @@
 {
-    "require": {
-        "behat/behat":          "2.4.*@stable",
-        "phpunit/phpunit":      "3.7.*",
-        "simplepie/simplepie":  "dev-master"
-    },
-    "minimum-stability":    "dev",
-    "config": {
-        "bin-dir":          "bin/"
-    },
-    "autoload": {
-		"psr-0": {
-			"SimplePie": "library"
-		}
-	}
+    "name":        "ronanguilloux/shakethenations",
+    "description": "Sismic events application",
+    "keywords":    ["volcano", "sismic", "events"],
+    "homepage":    "https://github.com/ronanguilloux/ShakeTheNations",
+    "license":     "GNU Affero GPL v3",
+    "authors": [
+    {
+        "name":     "Ronan Guilloux",
+        "email":    "ronan.guilloux@gmail.com",
+        "homepage": "https://github.com/ronanguilloux"
+    }
+    ],
+        "require": {
+            "behat/behat":          "2.4.*@stable",
+            "phpunit/phpunit":      "3.7.*",
+            "simplepie/simplepie":  "dev-master",
+            "pimple/pimple":            "dev-master",
+            "symfony/console":          "2.1.*",
+            "symfony/event-dispatcher": "2.1.*",
+            "symfony/filesystem":       "2.1.*",
+            "symfony/finder":           "2.1.*",
+            "symfony/process":          "2.1.1",
+            "symfony/yaml":             "2.1.*"
+        },
+        "minimum-stability":    "dev",
+        "config": {
+            "bin-dir":          "bin/"
+        },
+        "autoload": {
+            "psr-0": {
+                "ShakeTheNations": "src/"
+
+            }
+        }
+
 }

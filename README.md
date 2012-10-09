@@ -15,6 +15,11 @@ Quick install
     $ curl http://getcomposer.org/installer | php
     $ php composer.phar install
 
+Usage
+-----
+
+    $ shake
+
 Tests
 -----
 
@@ -26,6 +31,12 @@ Tests
 
     $ php bin/phpunit
 
+
+Inspirations, sources & thanks
+------------------------------
+
+* http://archive.plugins.jquery.com/project/jFeed
+* https://github.com/javiereguiluz/easybook
 
 Contributors
 ------------
