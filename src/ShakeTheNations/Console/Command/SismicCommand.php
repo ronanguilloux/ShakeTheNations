@@ -9,6 +9,7 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 use ShakeTheNations\DependencyInjection\Application;
+use ShakeTheNations\Helpers\Validator;
 
 class SismicCommand extends BaseCommand
 {
@@ -45,14 +46,16 @@ class SismicCommand extends BaseCommand
 
         $dialog = $this->getHelperSet()->get('dialog');
 
-        // check `title` argument
-        $title = $input->getArgument('location') ?: $dialog->askAndValidate(
+        // check `location` argument
+        $location = $input->getArgument('location') ?: $dialog->askAndValidate(
             $output,
             "\n Please, type your <info>location</info>"
             ." (e.g. <comment>Nantes, France</comment>)"
             ."\n > ",
             function ($location) {
-                return Validator::validateNonEmptyString('location', $location);
+              $notEmpty = Validator::validateNonEmptyString('location', $location);
+              $geocodable = Validator::validateGeocodable($location);
+                    return ($notEmpty && $geocodable);
             }
         );
         $input->setArgument('location', $location);
