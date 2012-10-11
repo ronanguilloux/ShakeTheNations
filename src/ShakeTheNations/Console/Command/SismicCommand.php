@@ -11,6 +11,8 @@ use Symfony\Component\Console\Output\OutputInterface;
 use ShakeTheNations\DependencyInjection\Application;
 use ShakeTheNations\Helpers\Validator;
 
+use ShakeTheNations\Helpers\Geo;
+
 class SismicCommand extends BaseCommand
 {
     protected function configure()
@@ -22,16 +24,16 @@ class SismicCommand extends BaseCommand
                 new InputArgument(
                     'location', InputArgument::REQUIRED, "Your location"
                 ),
-            ))
-            //->setHelp(file_get_contents(__DIR__.'/Resources/SismicCommandHelp.txt'))
-            ;
+            ));
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $title = Validator::validateNonEmptyString(
-            'location', $input->getArgument('location')
-        );
+        $tuple = each($input->getArgument('location'));
+        $location = $tuple['key'];
+        $position = $tuple['value'];
+        var_export($position);
+        echo " TODO : transfrom 47.21, -1.55 in 45.21/48.21 & -3.55/0.55";
     }
 
     protected function interact(InputInterface $input, OutputInterface $output)
@@ -49,13 +51,14 @@ class SismicCommand extends BaseCommand
         // check `location` argument
         $location = $input->getArgument('location') ?: $dialog->askAndValidate(
             $output,
-            "\n Please, type your <info>location</info>"
+            "Please, type your <info>location</info>"
             ." (e.g. <comment>Nantes, France</comment>)"
             ."\n > ",
             function ($location) {
-              $notEmpty = Validator::validateNonEmptyString('location', $location);
-              $geocodable = Validator::validateGeocodable($location);
-                    return ($notEmpty && $geocodable);
+                // These validators would throw exceptions
+                $notEmpty = Validator::validateNonEmptyString('location', $location);
+                $geocoded = Validator::validateGeocodable($location);
+                return array($location => $geocoded);;
             }
         );
         $input->setArgument('location', $location);

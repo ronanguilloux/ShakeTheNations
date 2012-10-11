@@ -23,6 +23,7 @@ class Application extends \Pimple
         $this['app.charset']   = 'UTF-8';
         $this['app.name']      = 'shakethenations';
         $this['app.signature']      = 'Shake The Nations!';
+        $this['app.feed']      =' http://www.emsc-csem.org/service/rss/rss.php?typ=emsc&min_lat=10&min_long=-30&max_long=65';
 
         // -- global directories location -------------------------------------
         $this['app.dir.base']         = realpath(__DIR__.'/../../../');
@@ -39,6 +40,7 @@ class Application extends \Pimple
         // -- timer -----------------------------------------------------------
         $this['app.timer.start']  = 0.0;
         $this['app.timer.finish'] = 0.0;
+
 
 
         // -- event dispatcher ------------------------------------------------
@@ -63,7 +65,6 @@ class Application extends \Pimple
 
 
         $this['parser'] = $this->share(function ($app) {
-
             return new Parser($app);
         });
 

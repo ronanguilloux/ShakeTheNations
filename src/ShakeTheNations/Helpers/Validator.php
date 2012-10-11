@@ -72,8 +72,11 @@ class Validator
     {
         $geo = new Geo();
         $geocoded = $geo->geocode($location);
-        var_export($geocoded);
-        return true;
+        if ( "OK" !== $geocoded['status'] ){ // Cf. Status values in API response
+            throw new \InvalidArgumentException("ERROR: The $name cannot be empty.");
+        }
+
+        return $geocoded;
     }
 
 }

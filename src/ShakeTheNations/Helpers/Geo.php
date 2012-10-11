@@ -135,6 +135,7 @@ class Geo
             $status = (string)$content->status;
             if(!empty($content->result->geometry->location)){
                 $answer = (array)$content->result->geometry->location;
+                //$answer = $content->result;
             }
             break;
         }

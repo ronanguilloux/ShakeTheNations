@@ -43,7 +43,7 @@ class Parser implements ParserInterface
         case 'xml':
             switch ($outputFormat) {
                 case 'json':
-                    $parsedContent = json_encode(simplexml_load_string($rss));
+                    $parsedContent = json_encode(simplexml_load_string($content));
                     break;
             }
             break;

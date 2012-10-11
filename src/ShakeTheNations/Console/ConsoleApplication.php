@@ -27,7 +27,6 @@ class ConsoleApplication extends SymfonyConsoleApplication
         parent::__construct('shakethenations', $this->app->getVersion());
 
         $this->add(new SismicCommand());
-        
         $this->definition = new InputDefinition(array(
             new InputArgument(
                 'command', InputArgument::REQUIRED, 'The command to execute'
