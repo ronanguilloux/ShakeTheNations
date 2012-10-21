@@ -52,7 +52,7 @@ class Geo
     }
 
     public function geotravel($origin, $destinations = array(),
-    $provider = 'google', $output = 'xml')
+        $provider = 'google', $output = 'xml')
     {
         $result = false;
         $separator = '|';
@@ -207,7 +207,169 @@ class Geo
     }
 
     /**
-    * source : http://php.net/manual/fr/book.simplexml.php
+    Get a boundingBox angle from a lat;long tuple, a bearing angle & a distance in km/miles
+
+    From richardpeacock.com
+
+    $lat = 47.2103350;
+    $lng = -1.6514440;
+
+    // Example: Create the static map api image.
+    $static_maps_url = "http://maps.googleapis.com/maps/api/staticmap";
+    $static_maps_url .= "?center=$lat,$lng";
+    $static_maps_url .= "&zoom=5";
+    $static_maps_url .= "&size=300x300";
+    $static_maps_url .= "&maptype=roadmap";
+    $static_maps_url .= "&sensor=false";
+    $static_maps_url .= "&markers=color:blue|$lat,$lng";
+
+    // Figure out the corners of a box surrounding our lat/lng.
+    $d = 500;  // distance
+    $output->writeln(array(
+            '',
+            ' Welcome to the ShakeTheNations interactive cli-tool',
+            ''
+        ));
+    // losange
+    $path_top_right = getBoundingBoxAngle($lat, $lng, 0, $d);
+    $path_bottom_right = getBoundingBoxAngle($lat, $lng, 90, $d);
+    $path_bottom_left = getBoundingBoxAngle($lat, $lng, 180, $d);
+    $path_top_left = getBoundingBoxAngle($lat, $lng, 270, $d);
+
+    // square
+    $path_top_right = getBoundingBoxAngle($lat, $lng, 45, $d);
+    $path_bottom_right = getBoundingBoxAngle($lat, $lng, 135, $d);
+    $path_bottom_left = getBoundingBoxAngle($lat, $lng, 225, $d);
+    $path_top_left = getBoundingBoxAngle($lat, $lng, 315, $d);
+
+    echo "<br /> path_top_right : <a href='https://maps.google.com/maps?f=q&q=$path_top_right&z=5'>$path_top_right</a>";
+    echo "<br /> path_bottom_right : <a href='https://maps.google.com/maps?f=q&q=$path_bottom_right&z=5'>$path_bottom_right</a>";
+    echo "<br /> path_bottom_left : <a href='https://maps.google.com/maps?f=q&q=$path_bottom_left&z=5'>$path_bottom_left</a>";
+    echo "<br /> path_top_left : <a href='https://maps.google.com/maps?f=q&q=$path_top_left&z=5'>$path_top_left</a>";
+    echo "<hr />";
+
+    $static_maps_url .= "&path=color:334433|weight:5|fillcolor:0xFFFF0033|";
+    $static_maps_url .= "$path_top_left|$path_top_right|$path_bottom_right|";
+    $static_maps_url .= "$path_bottom_left|$path_top_left";
+
+    // Now, draw the image from Google Maps API!
+    print "<img src='$static_maps_url'>";
+
+    Modified from:
+    http://www.sitepoint.com/forums/showthread.php?656315-adding-distance-gps-coordinates-get-bounding-box
+    bearing is 0 = north, 180 = south, 90 = east, 270 = west
+ */
+  public static function getBoundingBoxAngle($latitude, $longitude, $bearing, $distance, $distance_unit = "km", $return_as_array = FALSE) {
+
+    if ($distance_unit == "m") {
+      // Distance is in miles.
+		  $radius = 3963.1676;
+    }
+    else {
+      // distance is in km.
+      $radius = 6378.1;
+    }
+
+    //	New latitude in degrees.
+    $new_latitude = rad2deg(asin(sin(deg2rad($latitude)) * cos($distance / $radius) + cos(deg2rad($latitude)) * sin($distance / $radius) * cos(deg2rad($bearing))));
+
+    //	New longitude in degrees.
+    $new_longitude = rad2deg(deg2rad($longitude) + atan2(sin(deg2rad($bearing)) * sin($distance / $radius) * cos(deg2rad($latitude)), cos($distance / $radius) - sin(deg2rad($latitude)) * sin(deg2rad($new_latitude))));
+
+    if ($return_as_array) {
+      //  Assign new latitude and longitude to an array to be returned to the caller.
+      $coord = array();
+      $coord['lat'] = $new_latitude;
+      $coord['lng'] = $new_longitude;
+      foreach ($coord as $key=> $pos) {
+          $coord[$key] = str_replace(',','.',$pos); // dotted floating value
+      }
+
+    }
+    else {
+      $coord = $new_latitude . "," . $new_longitude;
+    }
+
+    return $coord;
+
+  }
+
+
+    /**
+     * getBoundingBox
+     *
+     * given a latitude and longitude in degrees (40.123123,-72.234234) and a distance in kilometers
+     * calculates a bounding box with corners $distance_in_kilometers away from the point specified.
+     *
+     * hacked out by ben brown <ben@xoxco.com>
+     *
+     * @example list($lat1,$lat2,$lon1,$lon2) = getBoundingBox(47.2183710,-1.5536210,500);
+     * @link http://xoxco.com/clickable/php-getboundingbox
+     *
+     * param float $lat_degrees
+     * param float $lon_degrees
+     * param float $distance_in_kilometers
+     * @return array($min_lat,$max_lat,$min_lon,$max_lon)
+     */
+    public static function getBoundingBox($lat_degrees,$lon_degrees,$distance_in_kilometers) {
+
+        $radius = 6378.1 ; // of earth in kilometers
+
+        // bearings
+        $due_north = 0;
+        $due_south = 180;
+        $due_east = 90;
+        $due_west = 270;
+
+        // convert latitude and longitude into radians
+        $lat_r = deg2rad($lat_degrees);
+        $lon_r = deg2rad($lon_degrees);
+
+        // find the northmost, southmost, eastmost and westmost corners $distance_in_kilometers away
+        // original formula from
+        // http://www.movable-type.co.uk/scripts/latlong.html
+
+        $northmost  = asin(sin($lat_r) * cos($distance_in_kilometers/$radius) + cos($lat_r) * sin ($distance_in_kilometers/$radius) * cos($due_north));
+        $southmost  = asin(sin($lat_r) * cos($distance_in_kilometers/$radius) + cos($lat_r) * sin ($distance_in_kilometers/$radius) * cos($due_south));
+
+        $eastmost = $lon_r + atan2(sin($due_east)*sin($distance_in_kilometers/$radius)*cos($lat_r),cos($distance_in_kilometers/$radius)-sin($lat_r)*sin($lat_r));
+        $westmost = $lon_r + atan2(sin($due_west)*sin($distance_in_kilometers/$radius)*cos($lat_r),cos($distance_in_kilometers/$radius)-sin($lat_r)*sin($lat_r));
+
+
+        $northmost = rad2deg($northmost);
+        $southmost = rad2deg($southmost);
+        $eastmost = rad2deg($eastmost);
+        $westmost = rad2deg($westmost);
+
+        // sort the lat and long so that we can use them for a between query
+        if ($northmost > $southmost) {
+            $lat1 = $southmost;
+            $lat2 = $northmost;
+
+        } else {
+            $lat1 = $northmost;
+            $lat2 = $southmost;
+        }
+
+
+        if ($eastmost > $westmost) {
+            $lon1 = $westmost;
+            $lon2 = $eastmost;
+
+        } else {
+            $lon1 = $eastmost;
+            $lon2 = $westmost;
+        }
+
+        $bbox = array($lat1,$lat2,$lon1,$lon2);
+        foreach ($bbox as $key=> $coord) {
+            $bbox[$key] = str_replace(',','.',$coord);
+        }
+        return $bbox;
+    }
+
+    /**
+     * source : http://php.net/manual/fr/book.simplexml.php
      * Converts a simpleXML element into an array. Preserves attributes.<br/>
      * You can choose to get your elements either flattened, or stored in a custom
      * index that you define.<br/>
@@ -261,10 +423,10 @@ class Geo
     public static function simpleXMLToArray(SimpleXMLElement $xml,$attributesKey=null,$childrenKey=null,$valueKey=null){
 
         if($childrenKey && !is_string($childrenKey)){$childrenKey = '@children';}
-        if($attributesKey && !is_string($attributesKey)){$attributesKey = '@attributes';}
-        if($valueKey && !is_string($valueKey)){$valueKey = '@values';}
+            if($attributesKey && !is_string($attributesKey)){$attributesKey = '@attributes';}
+                if($valueKey && !is_string($valueKey)){$valueKey = '@values';}
 
-        $return = array();
+                    $return = array();
         $name = $xml->getName();
         $_value = trim((string)$xml);
         if(!strlen($_value)){$_value = null;};

@@ -13,13 +13,15 @@ use ShakeTheNations\Helpers\Validator;
 
 use ShakeTheNations\Helpers\Geo;
 
+use ShakeTheNations\Helpers\Shake;
+
 class SismicCommand extends BaseCommand
 {
     protected function configure()
     {
         $this
-            ->setName('get')
-            ->setDescription('Get sismic news around you')
+            ->setName('from')
+            ->setDescription('Get sismic news around you, from your location')
             ->setDefinition(array(
                 new InputArgument(
                     'location', InputArgument::REQUIRED, "Your location"
@@ -29,13 +31,35 @@ class SismicCommand extends BaseCommand
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $tuple = each($input->getArgument('location'));
-        $location = $tuple['key'];
-        $position = $tuple['value'];
-        var_export($position);
-        echo " TODO : transfrom 47.21, -1.55 in 45.21/48.21 & -3.55/0.55";
+        $output->writeln($this->app['app.signature']);
+        $output->writeln(array(
+            '',
+            ' Welcome to the ShakeTheNations interactive cli-tool',
+            ''
+        ));
+        $location = $input->getArgument('location');
+        // These validators would throw exceptions
+        try {
+            $notEmpty = Validator::validateNonEmptyString('location', $location);
+            $position = Validator::validateGeocodable($location);
+        } catch (Exception $e) {
+            $output->writeln($e);
+        }
+        $output->writeln(
+            sprintf("Looking from some shake around %s (distance max: %d km)",
+            $location, Shake::DEFAULT_DISTANCE));
+
+        $lat =  $position['answer']['lat'];
+        $lng = $position['answer']['lng'];
+        $output->writeln(sprintf("%s: %F;%F",$location,$lat, $lng));
+
+
+        $shakes = Shake::getAround($location, $lat, $lng);
+
+
     }
 
+    /*
     protected function interact(InputInterface $input, OutputInterface $output)
     {
         $output->writeln($this->app['app.signature']);
@@ -63,4 +87,5 @@ class SismicCommand extends BaseCommand
         );
         $input->setArgument('location', $location);
     }
+     */
 }

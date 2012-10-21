@@ -19,11 +19,6 @@ use ShakeTheNations\DependencyInjection\Application;
 interface ParserInterface
 {
     /**
-    * @param Application $app The easybook application being executed
-     */
-    public function __construct(Application $app);
-
-    /**
      * Converts the original content into the appropriate content
      *
      * @param string $content The original content to be parsed
