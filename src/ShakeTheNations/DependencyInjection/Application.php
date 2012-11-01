@@ -1,12 +1,10 @@
 <?php
 
-
 namespace ShakeTheNations\DependencyInjection;
 
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Filesystem\Filesystem;
-use Symfony\Component\Yaml\Yaml;
 
 use ShakeTheNations\Parsers\Parser;
 
@@ -41,8 +39,6 @@ class Application extends \Pimple
         $this['app.timer.start']  = 0.0;
         $this['app.timer.finish'] = 0.0;
 
-
-
         // -- event dispatcher ------------------------------------------------
         $this['dispatcher'] = $this->share(function () {
             return new EventDispatcher();
@@ -63,11 +59,9 @@ class Application extends \Pimple
             return new Configurator($app);
         });
 
-
         $this['parser'] = $this->share(function ($app) {
             return new Parser($app);
         });
-
 
         // -- slugger ---------------------------------------------------------
         $this['slugger'] = $app->share(function () use ($app) {
@@ -76,7 +70,7 @@ class Application extends \Pimple
 
     }
 
-    public final function getVersion()
+    final public function getVersion()
     {
         return static::VERSION;
     }
@@ -99,7 +93,6 @@ class Application extends \Pimple
 
         return $array;
     }
-
 
     /**
      * Shortcut method to dispatch events.

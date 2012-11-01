@@ -29,16 +29,16 @@ class Geo
     /**
      * Geocode
      *
-     * @param string $rawAddress : complete address to resolve as lat/long
-     * @param string $provider : the API to ask, google by default
-     * @param string $output : output format, xml by default
+     * @param  string                          $rawAddress : complete address to resolve as lat/long
+     * @param  string                          $provider   : the API to ask, google by default
+     * @param  string                          $output     : output format, xml by default
      * @return array('anwser'=>array(lat,lng), 'status'=>OK/BAD)
      */
     public function geocode($rawAddress, $provider = 'google', $output = 'xml')
     {
         $rawAddress = $this->prepareForUrlApiCalls($rawAddress);
         $result = false;
-        switch($provider){
+        switch ($provider) {
             // other possible provider : Yahoo place
         default:
             $url = static::GOOGLE_GEOCODE_API . "/$output?" . static::GOOGLE_QUERY;
@@ -58,12 +58,11 @@ class Geo
         $separator = '|';
         $untouchedOrigin = $origin;
 
-
         // By packet of 20 units
         $destinationsQueries = array();
         $destinationsQuery = '';
-        foreach($destinations as $index => $destination) {
-            if($index % 20 == 0) {
+        foreach ($destinations as $index => $destination) {
+            if ($index % 20 == 0) {
                 if ($destinationsQuery) {
                     $destinationsQueries[] = $destinationsQuery;
                     $destinationsQuery = '';
@@ -77,12 +76,11 @@ class Geo
             $destinationsQuery = '';
         }
 
-        switch($provider){
+        switch ($provider) {
             // other possible provider : Yahoo place
         default:
             $urls = array();
-            foreach($destinationsQueries as $destinationsQuery)
-            {
+            foreach ($destinationsQueries as $destinationsQuery) {
                 $url = static::GOOGLE_MATRIX_API . "/$output?";
                 $url .= "origins=" . $this->prepareForUrlApiCalls($origin);
                 $url .= "&destinations=$destinationsQuery";
@@ -109,12 +107,11 @@ class Geo
         return str_replace(' ', '+', strip_tags($str));
     }
 
-
     /**
      * Ask a remote API & return a ['result'=>foo, 'status'=>bar] array
      *
-     * @param string $url : complete URL to be cUrled
-     * @param string $output : output format, xml by default
+     * @param  string               $url    : complete URL to be cUrled
+     * @param  string               $output : output format, xml by default
      * @return array('answer'=>foo, 'status'=>bar)
      */
     protected function askGoogleGeocode($url, $output = 'xml')
@@ -127,14 +124,14 @@ class Geo
         curl_setopt($c, CURLOPT_RETURNTRANSFER, 1);
         $content = trim(curl_exec($c));
         curl_close($c);
-        switch($output){
+        switch ($output) {
             // other possible way : json
         default: // 'xml'
             $content = simplexml_load_string($content);
             // raw string typecasting required on SXE object
-            $status = (string)$content->status;
-            if(!empty($content->result->geometry->location)){
-                $answer = (array)$content->result->geometry->location;
+            $status = (string) $content->status;
+            if (!empty($content->result->geometry->location)) {
+                $answer = (array) $content->result->geometry->location;
                 //$answer = $content->result;
             }
             break;
@@ -151,8 +148,8 @@ class Geo
      * Ask a remote API & return a ['result'=>foo, 'status'=>bar] array
      * Ex : http://goo.gl/3Mf35
      *
-     * @param string/array $urls : complete URL to be cUrled
-     * @param string $output : output format, xml by default
+     * @param  string/array         $urls   : complete URL to be cUrled
+     * @param  string               $output : output format, xml by default
      * @return array('answer'=>foo, 'status'=>bar)
      */
     protected function askGoogleDistance($urls, $output = 'xml')
@@ -163,8 +160,7 @@ class Geo
 
         $answers = array();
 
-        foreach($urls as $url)
-        {
+        foreach ($urls as $url) {
 
             $c = curl_init();
             curl_setopt($c, CURLOPT_URL, $url);
@@ -172,20 +168,19 @@ class Geo
             curl_setopt($c, CURLOPT_RETURNTRANSFER, 1);
             $content = trim(curl_exec($c));
             curl_close($c);
-            switch($output){
+            switch ($output) {
                 // other possible way : json
             default: // 'xml'
                 $content = @simplexml_load_string($content);
                 // raw string typecasting required on SXE object
-                $status = (string)$content->status;
-                if(!empty($content->row)){
+                $status = (string) $content->status;
+                if (!empty($content->row)) {
                     $answers[] = $content->row;
                     break;
                 }
 
             }
         }
-
 
         return array(
             'url' => '',
@@ -197,7 +192,7 @@ class Geo
     /**
      * add signature (cf http://gmaps-samples.googlecode.com/svn/trunk/urlsigning/UrlSigner.php-source)
      *
-     * @param string $myUrlToSign url complète
+     * @param  string $myUrlToSign url complète
      * @return string nouvelle url avec signature
      */
     public static function signUrl($urlToSign)
@@ -259,13 +254,12 @@ class Geo
     http://www.sitepoint.com/forums/showthread.php?656315-adding-distance-gps-coordinates-get-bounding-box
     bearing is 0 = north, 180 = south, 90 = east, 270 = west
  */
-  public static function getBoundingBoxAngle($latitude, $longitude, $bearing, $distance, $distance_unit = "km", $return_as_array = FALSE) {
-
+  public static function getBoundingBoxAngle($latitude, $longitude, $bearing, $distance, $distance_unit = "km", $return_as_array = FALSE)
+  {
     if ($distance_unit == "m") {
       // Distance is in miles.
-		  $radius = 3963.1676;
-    }
-    else {
+          $radius = 3963.1676;
+    } else {
       // distance is in km.
       $radius = 6378.1;
     }
@@ -285,15 +279,13 @@ class Geo
           $coord[$key] = str_replace(',','.',$pos); // dotted floating value
       }
 
-    }
-    else {
+    } else {
       $coord = $new_latitude . "," . $new_longitude;
     }
 
     return $coord;
 
   }
-
 
     /**
      * getBoundingBox
@@ -311,8 +303,8 @@ class Geo
      * param float $distance_in_kilometers
      * @return array($min_lat,$max_lat,$min_lon,$max_lon)
      */
-    public static function getBoundingBox($lat_degrees,$lon_degrees,$distance_in_kilometers) {
-
+    public static function getBoundingBox($lat_degrees,$lon_degrees,$distance_in_kilometers)
+    {
         $radius = 6378.1 ; // of earth in kilometers
 
         // bearings
@@ -335,7 +327,6 @@ class Geo
         $eastmost = $lon_r + atan2(sin($due_east)*sin($distance_in_kilometers/$radius)*cos($lat_r),cos($distance_in_kilometers/$radius)-sin($lat_r)*sin($lat_r));
         $westmost = $lon_r + atan2(sin($due_west)*sin($distance_in_kilometers/$radius)*cos($lat_r),cos($distance_in_kilometers/$radius)-sin($lat_r)*sin($lat_r));
 
-
         $northmost = rad2deg($northmost);
         $southmost = rad2deg($southmost);
         $eastmost = rad2deg($eastmost);
@@ -351,7 +342,6 @@ class Geo
             $lat2 = $southmost;
         }
 
-
         if ($eastmost > $westmost) {
             $lon1 = $westmost;
             $lon2 = $eastmost;
@@ -365,6 +355,7 @@ class Geo
         foreach ($bbox as $key=> $coord) {
             $bbox[$key] = str_replace(',','.',$coord);
         }
+
         return $bbox;
     }
 
@@ -402,78 +393,72 @@ class Geo
      * $array['parent']['child'][1] = 'b';
      * ...And so on.
      * </code>
-     * @param simpleXMLElement    $xml            the XML to convert
-     * @param boolean|string    $attributesKey    if you pass TRUE, all values will be
+     * @param simpleXMLElement $xml           the XML to convert
+     * @param boolean|string   $attributesKey if you pass TRUE, all values will be
      *                                            stored under an '@attributes' index.
      *                                            Note that you can also pass a string
      *                                            to change the default index.<br/>
      *                                            defaults to null.
-     * @param boolean|string    $childrenKey    if you pass TRUE, all values will be
+     * @param boolean|string $childrenKey if you pass TRUE, all values will be
      *                                            stored under an '@children' index.
      *                                            Note that you can also pass a string
      *                                            to change the default index.<br/>
      *                                            defaults to null.
-     * @param boolean|string    $valueKey        if you pass TRUE, all values will be
+     * @param boolean|string $valueKey if you pass TRUE, all values will be
      *                                            stored under an '@values' index. Note
      *                                            that you can also pass a string to
      *                                            change the default index.<br/>
      *                                            defaults to null.
      * @return array the resulting array.
      */
-    public static function simpleXMLToArray(SimpleXMLElement $xml,$attributesKey=null,$childrenKey=null,$valueKey=null){
-
-        if($childrenKey && !is_string($childrenKey)){$childrenKey = '@children';}
-            if($attributesKey && !is_string($attributesKey)){$attributesKey = '@attributes';}
-                if($valueKey && !is_string($valueKey)){$valueKey = '@values';}
+    public static function simpleXMLToArray(SimpleXMLElement $xml,$attributesKey=null,$childrenKey=null,$valueKey=null)
+    {
+        if ($childrenKey && !is_string($childrenKey)) {$childrenKey = '@children';}
+            if ($attributesKey && !is_string($attributesKey)) {$attributesKey = '@attributes';}
+                if ($valueKey && !is_string($valueKey)) {$valueKey = '@values';}
 
                     $return = array();
         $name = $xml->getName();
-        $_value = trim((string)$xml);
-        if(!strlen($_value)){$_value = null;};
+        $_value = trim((string) $xml);
+        if (!strlen($_value)) {$_value = null;};
 
-        if($_value!==null){
-            if($valueKey){$return[$valueKey] = $_value;}
-            else{$return = $_value;}
+        if ($_value!==null) {
+            if ($valueKey) {$return[$valueKey] = $_value;} else {$return = $_value;}
         }
 
         $children = array();
         $first = true;
-        foreach($xml->children() as $elementName => $child){
+        foreach ($xml->children() as $elementName => $child) {
             $value = self::simpleXMLToArray($child,$attributesKey, $childrenKey,$valueKey);
-            if(isset($children[$elementName])){
-                if(is_array($children[$elementName])){
-                    if($first){
+            if (isset($children[$elementName])) {
+                if (is_array($children[$elementName])) {
+                    if ($first) {
                         $temp = $children[$elementName];
                         unset($children[$elementName]);
                         $children[$elementName][] = $temp;
                         $first=false;
                     }
                     $children[$elementName][] = $value;
-                }else{
+                } else {
                     $children[$elementName] = array($children[$elementName],$value);
                 }
-            }
-            else{
+            } else {
                 $children[$elementName] = $value;
             }
         }
-        if($children){
-            if($childrenKey){$return[$childrenKey] = $children;}
-            else{$return = array_merge($return,$children);}
+        if ($children) {
+            if ($childrenKey) {$return[$childrenKey] = $children;} else {$return = array_merge($return,$children);}
         }
 
         $attributes = array();
-        foreach($xml->attributes() as $name=>$value){
+        foreach ($xml->attributes() as $name=>$value) {
             $attributes[$name] = trim($value);
         }
-        if($attributes){
-            if($attributesKey){$return[$attributesKey] = $attributes;}
-            else{$return = array_merge($return, $attributes);}
+        if ($attributes) {
+            if ($attributesKey) {$return[$attributesKey] = $attributes;} else {$return = array_merge($return, $attributes);}
         }
 
         return $return;
     }
 
 }
-
-?>

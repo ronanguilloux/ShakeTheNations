@@ -28,12 +28,12 @@ class Shake
         $arr = json_decode($json);
         $events = array();
         $index = 0;
-        foreach($sxe->channel->item as $key=>$item){
+        foreach ($sxe->channel->item as $key=>$item) {
             // TODO : add distance from location
             //var_export($item);
             $distanceFromLocation = '';
             $events[$index] = $item;
-            if($index >= Shake::DEFAULT_NUMBER) {
+            if ($index >= Shake::DEFAULT_NUMBER) {
                 break;
             }
             $index++;
