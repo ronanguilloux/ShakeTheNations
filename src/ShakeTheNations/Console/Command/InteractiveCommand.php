@@ -28,9 +28,12 @@ class InteractiveCommand extends BaseCommand
                 new InputArgument(
                     'location', InputArgument::REQUIRED, "Your location"
                 ),
-            )
-        );
-
+            ))
+            ->setHelp("
+                The <info>shake ask</info> interactive command allows you to determine
+                <comment>from where</comment> and <comment>for wich period</comment>
+                you want to fetch infos about sismic event
+                ");
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)

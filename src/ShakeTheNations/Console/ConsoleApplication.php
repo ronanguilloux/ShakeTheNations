@@ -43,8 +43,8 @@ class ConsoleApplication extends SymfonyConsoleApplication
     {
         $help = array(
             $this->app['app.signature'],
-            '<info>shakethenations</info>',
-            'Tool to get sismic news around you.'
+            'Tool to get sismic news around you.',
+            'To get help about a command, type <info>shake [command] --help</info>'
         );
 
         return implode("\n", $help);
