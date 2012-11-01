@@ -7,7 +7,8 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputDefinition;
 use Symfony\Component\Console\Input\InputOption;
 
-use ShakeTheNations\Console\Command\SismicCommand;
+use ShakeTheNations\Console\Command\DirectCommand;
+use ShakeTheNations\Console\Command\InteractiveCommand;
 
 use ShakeTheNations\DependencyInjection\Application;
 
@@ -26,7 +27,8 @@ class ConsoleApplication extends SymfonyConsoleApplication
 
         parent::__construct('shakethenations', $this->app->getVersion());
 
-        $this->add(new SismicCommand());
+        $this->add(new DirectCommand());
+        $this->add(new InteractiveCommand());
         $this->definition = new InputDefinition(array(
             new InputArgument(
                 'command', InputArgument::REQUIRED, 'The command to execute'

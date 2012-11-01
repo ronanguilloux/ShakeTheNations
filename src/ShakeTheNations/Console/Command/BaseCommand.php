@@ -30,7 +30,7 @@ class BaseCommand extends Command
         return $txt;
     }
 
- 
+/*
     private function registerEventSubscribers($dir, $namespace = '')
     {
         if (!file_exists($dir)) {
@@ -50,4 +50,5 @@ class BaseCommand extends Command
             }
         }
     }
+ */
 }
