@@ -3,10 +3,10 @@ phploc 1.7.1 by Sebastian Bergmann.
 Directories:                                          4
 Files:                                               12
 
-Lines of Code (LOC):                               1061
+Lines of Code (LOC):                               1067
   Cyclomatic Complexity / Lines of Code:           0,07
 Comment Lines of Code (CLOC):                       319
-Non-Comment Lines of Code (NCLOC):                  742
+Non-Comment Lines of Code (NCLOC):                  748
 
 Namespaces:                                           5
 Interfaces:                                           1
@@ -14,16 +14,16 @@ Traits:                                               0
 Classes:                                             11
   Abstract:                                           0 (0,00%)
   Concrete:                                          11 (100,00%)
-  Average Class Length (NCLOC):                      64
-Methods:                                             36
+  Average Class Length (NCLOC):                      65
+Methods:                                             37
   Scope:
-    Non-Static:                                      27 (75,00%)
-    Static:                                           9 (25,00%)
+    Non-Static:                                      28 (75,68%)
+    Static:                                           9 (24,32%)
   Visibility:
-    Public:                                          24 (66,67%)
-    Non-Public:                                      12 (33,33%)
+    Public:                                          24 (64,86%)
+    Non-Public:                                      13 (35,14%)
   Average Method Length (NCLOC):                     19
-  Cyclomatic Complexity / Number of Methods:       2,53
+  Cyclomatic Complexity / Number of Methods:       2,49
 
 Anonymous Functions:                                  9
 Functions:                                            0
@@ -32,8 +32,10 @@ Constants:                                            9
   Global constants:                                   0
   Class constants:                                    9
 
-/home/ronan/Workspace/github/ShakeTheNations/src/ShakeTheNations/Console/Command/BaseCommand.php:44	Avoid unused local variables such as '$notEmpty'.
-/home/ronan/Workspace/github/ShakeTheNations/src/ShakeTheNations/Console/Command/BaseCommand.php:59	Avoid unused local variables such as '$shakes'.
+/home/ronan/Workspace/github/ShakeTheNations/src/ShakeTheNations/Console/Command/BaseCommand.php:22	Avoid unused parameters such as '$input'.
+/home/ronan/Workspace/github/ShakeTheNations/src/ShakeTheNations/Console/Command/BaseCommand.php:22	Avoid unused parameters such as '$output'.
+/home/ronan/Workspace/github/ShakeTheNations/src/ShakeTheNations/Console/Command/BaseCommand.php:49	Avoid unused local variables such as '$notEmpty'.
+/home/ronan/Workspace/github/ShakeTheNations/src/ShakeTheNations/Console/Command/BaseCommand.php:65	Avoid unused local variables such as '$shakes'.
 /home/ronan/Workspace/github/ShakeTheNations/src/ShakeTheNations/DependencyInjection/Application.php:89	Avoid variables with short names like $id. Configured minimum length is 3.
 /home/ronan/Workspace/github/ShakeTheNations/src/ShakeTheNations/DependencyInjection/Application.php:94	Avoid variables with short names like $id. Configured minimum length is 3.
 /home/ronan/Workspace/github/ShakeTheNations/src/ShakeTheNations/DependencyInjection/Application.php:99	Avoid variables with short names like $id. Configured minimum length is 3.
@@ -41,9 +43,11 @@ Constants:                                            9
 /home/ronan/Workspace/github/ShakeTheNations/src/ShakeTheNations/Helpers/Geo.php:306	Avoid excessively long variable names like $distance_in_kilometers. Keep variable name length under 20.
 /home/ronan/Workspace/github/ShakeTheNations/src/ShakeTheNations/Helpers/Geo.php:414	The method simpleXMLToArray() has a Cyclomatic Complexity of 19. The configured cyclomatic complexity threshold is 10.
 /home/ronan/Workspace/github/ShakeTheNations/src/ShakeTheNations/Helpers/Geo.php:414	The method simpleXMLToArray() has an NPath complexity of 14580. The configured NPath complexity threshold is 200.
+/home/ronan/Workspace/github/ShakeTheNations/src/ShakeTheNations/Helpers/Shake.php:31	Avoid unused local variables such as '$key'.
+/home/ronan/Workspace/github/ShakeTheNations/src/ShakeTheNations/Helpers/Shake.php:34	Avoid unused local variables such as '$distanceFromLocation'.
 phpcpd 1.4.0 by Sebastian Bergmann.
 
-0.00% duplicated lines out of 1061 total lines of code.
+0.00% duplicated lines out of 1067 total lines of code.
 
 Time: 0 seconds, Memory: 5,75Mb
 PHP_Depend 1.1.0 by Manuel Pichler

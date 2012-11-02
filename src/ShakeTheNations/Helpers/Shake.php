@@ -42,8 +42,6 @@ class Shake
         return array(
             'location'=>$location,
             'arr' => $arr,
-            'key' => $key,
-            'distanceFromLocation' => $distanceFromLocation
         );
     }
 }

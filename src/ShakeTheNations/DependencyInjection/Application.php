@@ -39,18 +39,7 @@ class Application extends \Pimple
         $this['app.timer.start']  = 0.0;
         $this['app.timer.finish'] = 0.0;
 
-        // -- geocoder ------------------------------------------------
-        $this['geocoder'] = $this->share(function () {
-            $geocoder = new \Geocoder\Geocoder();
-            $buzz    = new \Buzz\Browser(new \Buzz\Client\Curl());
-            $adapter  = new Geocoder\HttpAdapter\BuzzHttpAdapter($buzz);
-            $geocoder->registerProviders(array(
-                new \Geocoder\Provider\GoogleMapsProvider($adapter)
-            ));
-            return $geocoder;
-        });
-
-        // -- event dispatcher ------------------------------------------------
+       // -- event dispatcher ------------------------------------------------
         $this['dispatcher'] = $this->share(function () {
             return new EventDispatcher();
         });
@@ -77,6 +66,17 @@ class Application extends \Pimple
         // -- slugger ---------------------------------------------------------
         $this['slugger'] = $app->share(function () use ($app) {
             return new Slugger($app);
+        });
+
+        // -- geocoder ------------------------------------------------
+        $this['geocoder'] = $this->share(function () {
+            $geocoder = new \Geocoder\Geocoder();
+            $buzz    = new \Buzz\Browser(new \Buzz\Client\Curl());
+            $adapter  = new \Geocoder\HttpAdapter\BuzzHttpAdapter($buzz);
+            $geocoder->registerProviders(array(
+                new \Geocoder\Provider\GoogleMapsProvider($adapter)
+            ));
+            return $geocoder;
         });
 
     }

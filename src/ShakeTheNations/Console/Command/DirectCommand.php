@@ -6,6 +6,7 @@ use Symfony\Component\Console\Command\Command;
 
 class DirectCommand extends BaseCommand
 {
+
     protected function configure()
     {
         parent::configure();

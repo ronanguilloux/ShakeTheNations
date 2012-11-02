@@ -8,6 +8,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class InteractiveCommand extends BaseCommand
 {
+
     protected function configure()
     {
         parent::configure();

@@ -17,7 +17,8 @@
             "symfony/console":      "2.1.*",
             "symfony/yaml":         "2.1.*",
             "pimple/pimple":        "dev-master",
-             "willdurand/geocoder": "*"
+            "willdurand/geocoder": "*",
+            "kriswallsmith/buzz": "*"
         },
         "minimum-stability":    "dev",
         "config": {

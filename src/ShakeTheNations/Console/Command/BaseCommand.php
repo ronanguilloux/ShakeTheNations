@@ -19,6 +19,11 @@ class BaseCommand extends Command
         return $this->app;
     }
 
+    protected function initialize(InputInterface $input = null, OutputInterface $output = null)
+    {
+        $this->app = $this->getApplication()->getApp();
+    }
+
     protected function configure()
     {
         $this
@@ -52,8 +57,9 @@ class BaseCommand extends Command
             sprintf("Looking from some shake around %s (distance max: %d km)",
             $location, $distance));
 
-        $lat = $position['answer']['lat'];
-        $lng = $position['answer']['lng'];
+        $position = $this->app->get('geocoder')->geocode($location);
+        $lat = $position['latitude'];
+        $lng = $position['longitude'];
 
         $output->writeln(sprintf("%s: %f;%f",$location,$lat, $lng));
         $shakes = Shake::getAround($location, $lat, $lng);
@@ -63,8 +69,8 @@ class BaseCommand extends Command
     {
         $app = $this->getApplication()->getApp();
         $txt = $app['app.signature']
-               ."\n"
-               .parent::asText();
+            ."\n"
+            .parent::asText();
 
         return $txt;
     }
