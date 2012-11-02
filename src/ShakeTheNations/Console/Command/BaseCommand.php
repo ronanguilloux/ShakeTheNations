@@ -4,7 +4,11 @@ namespace ShakeTheNations\Console\Command;
 
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Output\OutputInterface;
+
+use ShakeTheNations\Helpers\Validator;
+use ShakeTheNations\Helpers\Shake;
 
 class BaseCommand extends Command
 {
@@ -15,9 +19,44 @@ class BaseCommand extends Command
         return $this->app;
     }
 
-    protected function initialize(InputInterface $input = null, OutputInterface $output = null)
+    protected function configure()
     {
-        $this->app = $this->getApplication()->getApp();
+        $this
+            ->setDefinition(array(
+                new InputArgument(
+                    'location', InputArgument::REQUIRED, "Your location"
+                ),
+                new InputArgument(
+                    'distance', InputArgument::OPTIONAL, "(optional) Maximum search distance area from your location"
+                )
+            )
+        );
+    }
+
+    protected function execute(InputInterface $input, OutputInterface $output)
+    {
+        $location = $input->getArgument('location');
+        $distance = $input->getArgument('distance');
+        // Picking up the defaut value for the optional arg
+        $distance = (empty($distance)) ? Shake::DEFAULT_DISTANCE : $distance;
+        // These validators would throw exceptions
+        try {
+            $notEmpty = Validator::validateNonEmptyString('location', $location);
+            $position = Validator::validateGeocodable($location);
+        } catch (Exception $e) {
+            $output->writeln($e);
+
+            return false;
+        }
+        $output->writeln(
+            sprintf("Looking from some shake around %s (distance max: %d km)",
+            $location, $distance));
+
+        $lat = $position['answer']['lat'];
+        $lng = $position['answer']['lng'];
+
+        $output->writeln(sprintf("%s: %f;%f",$location,$lat, $lng));
+        $shakes = Shake::getAround($location, $lat, $lng);
     }
 
     public function asText()
@@ -29,26 +68,4 @@ class BaseCommand extends Command
 
         return $txt;
     }
-
-/*
-    private function registerEventSubscribers($dir, $namespace = '')
-    {
-        if (!file_exists($dir)) {
-            return;
-        }
-
-        $files = $this->app->get('finder')->files()
-            ->name('*Plugin.php')
-            ->in($dir)
-        ;
-
-        foreach ($files as $file) {
-            $className = $file->getBasename('.php');  // strip .php extension
-           $r = new \ReflectionClass($namespace.'\\'.$className);
-            if ($r->implementsInterface('Symfony\\Component\\EventDispatcher\\EventSubscriberInterface')) {
-                $this->app->get('dispatcher')->addSubscriber($r->newInstance());
-            }
-        }
-    }
- */
 }

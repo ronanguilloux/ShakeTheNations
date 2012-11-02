@@ -4,62 +4,21 @@ namespace ShakeTheNations\Console\Command;
 
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Output\OutputInterface;
-
-use ShakeTheNations\Helpers\Validator;
-
-use ShakeTheNations\Helpers\Geo;
-
-use ShakeTheNations\Helpers\Shake;
 
 class InteractiveCommand extends BaseCommand
 {
     protected function configure()
     {
+        parent::configure();
         $this
             ->setName('ask')
             ->setDescription('(interactive) Get sismic events news')
-            ->setDefinition(array(
-                new InputArgument(
-                    'location', InputArgument::REQUIRED, "Your location"
-                ),
-                new InputArgument(
-                    'distance', InputArgument::OPTIONAL, "The max distance of the sismic event"
-                ),
-            ))
             ->setHelp("
                 The <info>shake ask</info> interactive command allows you to determine
                 <comment>from where</comment> and <comment>for wich period</comment>
                 you want to fetch infos about sismic event
                 ");
-    }
-
-    protected function execute(InputInterface $input, OutputInterface $output)
-    {
-        $location = $input->getArgument('location');
-        $distance = $input->getArgument('distance');
-        // Picking up the defaut value for the optional arg
-        $distance = (empty($distance)) ? Shake::DEFAULT_DISTANCE : $distance;
-        // These validators would throw exceptions
-        try {
-            $notEmptyLocation = Validator::validateNonEmptyString('location', $location);
-            $position = Validator::validateGeocodable($location);
-        } catch (Exception $e) {
-            $output->writeln($e);
-
-            return false;
-        }
-        $output->writeln(
-            sprintf("Looking from some shake around %s (distance max: %d km)",
-            $location, $distance));
-
-        $lat =  $position['answer']['lat'];
-        $lng = $position['answer']['lng'];
-        $output->writeln(sprintf("%s: %F;%F",$location,$lat, $lng));
-
-        $shakes = Shake::getAround($location, $lat, $lng);
-
     }
 
     protected function interact(InputInterface $input, OutputInterface $output)
@@ -77,7 +36,6 @@ class InteractiveCommand extends BaseCommand
             ." (e.g. <comment>Nantes, France</comment>)"
             ."\n > ",
             function ($location) use ($input) {
-                // These validators would throw exceptions
                 $input->setArgument('location', $location);
             }
         );
@@ -87,7 +45,6 @@ class InteractiveCommand extends BaseCommand
             ." (e.g. <comment>500</comment>)"
             ."\n > ",
             function ($distance) use ($input) {
-                // These validators would throw exceptions
                 $input->setArgument('distance', $distance);
             }
         );
