@@ -56,7 +56,6 @@ class Geo
     {
         $result = false;
         $separator = '|';
-        $untouchedOrigin = $origin;
 
         // By packet of 20 units
         $destinationsQueries = array();
@@ -119,11 +118,11 @@ class Geo
         $status = false;
         $answer = array();
 
-        $c = curl_init();
-        curl_setopt($c, CURLOPT_URL, $url);
-        curl_setopt($c, CURLOPT_RETURNTRANSFER, 1);
-        $content = trim(curl_exec($c));
-        curl_close($c);
+        $curlResource = curl_init();
+        curl_setopt($curlResource, CURLOPT_URL, $url);
+        curl_setopt($curlResource, CURLOPT_RETURNTRANSFER, 1);
+        $content = trim(curl_exec($curlResource));
+        curl_close($curlResource);
         switch ($output) {
             // other possible way : json
         default: // 'xml'
@@ -139,8 +138,9 @@ class Geo
 
         return array(
             'url' => $url,
-            'answer'=>$answer,
-            'status'=>$status
+            'content' => $content,
+            'answer' => $answer,
+            'status' => $status
         );
     }
 
@@ -253,39 +253,39 @@ class Geo
     Modified from:
     http://www.sitepoint.com/forums/showthread.php?656315-adding-distance-gps-coordinates-get-bounding-box
     bearing is 0 = north, 180 = south, 90 = east, 270 = west
- */
-  public static function getBoundingBoxAngle($latitude, $longitude, $bearing, $distance, $distance_unit = "km", $return_as_array = FALSE)
-  {
-    if ($distance_unit == "m") {
-      // Distance is in miles.
-          $radius = 3963.1676;
-    } else {
-      // distance is in km.
-      $radius = 6378.1;
+     */
+    public static function getBoundingBoxAngle($latitude, $longitude, $bearing, $distance, $distance_unit = "km", $return_as_array = FALSE)
+    {
+        if ($distance_unit == "m") {
+            // Distance is in miles.
+            $radius = 3963.1676;
+        } else {
+            // distance is in km.
+            $radius = 6378.1;
+        }
+
+        //	New latitude in degrees.
+        $new_latitude = rad2deg(asin(sin(deg2rad($latitude)) * cos($distance / $radius) + cos(deg2rad($latitude)) * sin($distance / $radius) * cos(deg2rad($bearing))));
+
+        //	New longitude in degrees.
+        $new_longitude = rad2deg(deg2rad($longitude) + atan2(sin(deg2rad($bearing)) * sin($distance / $radius) * cos(deg2rad($latitude)), cos($distance / $radius) - sin(deg2rad($latitude)) * sin(deg2rad($new_latitude))));
+
+        if ($return_as_array) {
+            //  Assign new latitude and longitude to an array to be returned to the caller.
+            $coord = array();
+            $coord['lat'] = $new_latitude;
+            $coord['lng'] = $new_longitude;
+            foreach ($coord as $key=> $pos) {
+                $coord[$key] = str_replace(',','.',$pos); // dotted floating value
+            }
+
+        } else {
+            $coord = $new_latitude . "," . $new_longitude;
+        }
+
+        return $coord;
+
     }
-
-    //	New latitude in degrees.
-    $new_latitude = rad2deg(asin(sin(deg2rad($latitude)) * cos($distance / $radius) + cos(deg2rad($latitude)) * sin($distance / $radius) * cos(deg2rad($bearing))));
-
-    //	New longitude in degrees.
-    $new_longitude = rad2deg(deg2rad($longitude) + atan2(sin(deg2rad($bearing)) * sin($distance / $radius) * cos(deg2rad($latitude)), cos($distance / $radius) - sin(deg2rad($latitude)) * sin(deg2rad($new_latitude))));
-
-    if ($return_as_array) {
-      //  Assign new latitude and longitude to an array to be returned to the caller.
-      $coord = array();
-      $coord['lat'] = $new_latitude;
-      $coord['lng'] = $new_longitude;
-      foreach ($coord as $key=> $pos) {
-          $coord[$key] = str_replace(',','.',$pos); // dotted floating value
-      }
-
-    } else {
-      $coord = $new_latitude . "," . $new_longitude;
-    }
-
-    return $coord;
-
-  }
 
     /**
      * getBoundingBox

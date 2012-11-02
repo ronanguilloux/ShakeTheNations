@@ -16,17 +16,17 @@ class Parser implements ParserInterface
      */
     public function transform($content, $inputFormat = 'xml', $outputFormat = 'json')
     {
-        $supportedInputFormats = array('xml');
-        $supportedOutputFormats = array('json');
+        $supportedInputs = array('xml');
+        $supportedOutputs = array('json');
         $parsedContent = null;
 
-        if (!in_array($inputFormat, $supportedInputFormats)) {
+        if (!in_array($inputFormat, $supportedInputs)) {
             throw new \Exception(sprintf('No parser available for "%s" format',
                 $inputFormat
             ));
         }
 
-        if (!in_array($outputFormat, $supportedOutputFormats)) {
+        if (!in_array($outputFormat, $supportedOutputs)) {
             throw new \Exception(sprintf('No parser available for "%s" format',
                 $outputFormat
             ));

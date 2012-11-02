@@ -39,6 +39,11 @@ class Shake
             $index++;
         }
         // TODO: sort array over distance from location
-
+        return array(
+            'location'=>$location,
+            'arr' => $arr,
+            'key' => $key,
+            'distanceFromLocation' => $distanceFromLocation
+        );
     }
 }
