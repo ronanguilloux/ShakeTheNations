@@ -17,7 +17,7 @@
             "symfony/console":      "2.1.*",
             "symfony/yaml":         "2.1.*",
             "pimple/pimple":        "dev-master",
-            "ideato/geo-adapter":   "dev-master"
+             "willdurand/geocoder": "*"
         },
         "minimum-stability":    "dev",
         "config": {
