@@ -39,6 +39,17 @@ class Application extends \Pimple
         $this['app.timer.start']  = 0.0;
         $this['app.timer.finish'] = 0.0;
 
+        // -- geocoder ------------------------------------------------
+        $this['geocoder'] = $this->share(function () {
+            $geocoder = new \Geocoder\Geocoder();
+            $buzz    = new \Buzz\Browser(new \Buzz\Client\Curl());
+            $adapter  = new Geocoder\HttpAdapter\BuzzHttpAdapter($buzz);
+            $geocoder->registerProviders(array(
+                new \Geocoder\Provider\GoogleMapsProvider($adapter)
+            ));
+            return $geocoder;
+        });
+
         // -- event dispatcher ------------------------------------------------
         $this['dispatcher'] = $this->share(function () {
             return new EventDispatcher();
