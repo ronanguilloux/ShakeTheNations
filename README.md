@@ -38,6 +38,16 @@ Inspirations, sources & thanks
 * http://archive.plugins.jquery.com/project/jFeed
 * https://github.com/javiereguiluz/easybook
 
+Where to find Sismicity information online ?
+--------------------------------------------
+
+* http://www.planseisme.fr
+* http://www.seismes.fr/
+* http://www.tsunamis.fr/
+* http://www.afps-seisme.org/index.php/fre/Seismes/Derniers-seismes
+* http://www-dase.cea.fr/
+
+
 Contributors
 ------------
 

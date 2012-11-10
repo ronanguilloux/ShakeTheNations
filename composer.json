@@ -18,7 +18,8 @@
             "symfony/yaml":         "2.1.*",
             "pimple/pimple":        "dev-master",
             "willdurand/geocoder": "*",
-            "kriswallsmith/buzz": "*"
+            "kriswallsmith/buzz": "*",
+            "ronanguilloux/geocodertoolkit" : "dev-master"
         },
         "minimum-stability":    "dev",
         "config": {
