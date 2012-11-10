@@ -21,7 +21,7 @@ class Shake
         $rss .= "&min_long=" . $southWest['lng'];
         $rss .= "&max_lat=" . $northEast['lat'];
         $rss .= "&max_long=" . $northEast['lng'];
-        //echo  sprintf("RSS url: %s",$rss);
+        echo  sprintf("RSS url: %s",$rss);
         $sxe = simplexml_load_string(file_get_contents($rss));
         $json = Parser::transform(file_get_contents($rss));
         //echo sprintf("JSON txt: %s",$json);

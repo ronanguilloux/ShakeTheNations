@@ -10,7 +10,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use ShakeTheNations\Helpers\Validator;
 use ShakeTheNations\Helpers\Shake;
 
-class BaseCommand extends Command
+abstract class BaseCommand extends Command
 {
     protected $app;
 
