@@ -7,6 +7,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Output\OutputInterface;
 
+use ShakeTheNations\Feeders\BaseFeeder;
 use ShakeTheNations\Helpers\Validator;
 use ShakeTheNations\Helpers\Shake;
 
@@ -62,6 +63,10 @@ abstract class BaseCommand extends Command
         $lng = $position['longitude'];
 
         $output->writeln(sprintf("%s: %f;%f",$location,$lat, $lng));
+        $foo = $this->app->get('feeder');
+//        var_dump($foo);die();
+        $bar = $foo->fetch($location, $lat, $lng);
+
         $shakes = Shake::getAround($location, $lat, $lng);
     }
 

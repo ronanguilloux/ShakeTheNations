@@ -79,6 +79,14 @@ class Application extends \Pimple
             return $geocoder;
         });
 
+        // -- feeder ------------------------------------------------
+        $this['feeder.default'] = '\ShakeTheNations\Feeders\EMSCFeeder';
+        $this['feeder'] = function ($this) use ($app) {
+            $class = new \ReflectionClass($this['feeder.default']);
+            $instance = $class->newInstanceArgs(array($app));
+            return $instance;
+        };
+
     }
 
     final public function getVersion()
