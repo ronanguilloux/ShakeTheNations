@@ -2,7 +2,6 @@
 
 namespace ShakeTheNations\Feeders;
 
-use ShakeTheNations\Helpers\Geo;
 use ShakeTheNations\Feeders\BaseFeeder;
 use ShakeTheNations\Feeders\FeederInterface;
 use ShakeTheNations\Parsers\Parser;

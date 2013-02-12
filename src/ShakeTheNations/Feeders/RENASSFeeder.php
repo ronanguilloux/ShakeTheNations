@@ -8,7 +8,4 @@
  * @version //autogentag//
  */
 
-
 // http://renass.u-strasbg.fr/~autodrm/AutoDRM/autodrm_rqt_form.html
-?>
-

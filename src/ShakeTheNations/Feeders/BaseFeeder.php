@@ -24,7 +24,7 @@ abstract class BaseFeeder implements FeederInterface
 
     public function __construct($app)
     {
-        if(empty($app)) {
+        if (empty($app)) {
             throw new \InvalidArgumentException(" mandatory app parameter is missing!");
         }
         $this->app = $app;
@@ -35,7 +35,8 @@ abstract class BaseFeeder implements FeederInterface
         throw new \Exception(__CLASS__ . " base class does not implements fetch action: use real feeder classes instead.");
     }
 
-    public function defineBoundingBox($lat, $lng, $distance = self::DEFAULT_DISTANCE, $unit = self::DEFAULT_UNIT) {
+    public function defineBoundingBox($lat, $lng, $distance = self::DEFAULT_DISTANCE, $unit = self::DEFAULT_UNIT)
+    {
         // the origin
         $geocoded = new Geocoded();
         $geocoded->fromArray(array('latitude'=>$lat, 'longitude'=>$lng));

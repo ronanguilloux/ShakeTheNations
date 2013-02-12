@@ -9,6 +9,3 @@
  */
 
 // http://www-dase.cea.fr/evenement/syntheses_resultat.php?n=10&lat_min=46.7&lat_max=47.8&lon_min=-2.4&lon_max=-0.9&lang=fr
-
-?>
-

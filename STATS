@@ -3,10 +3,10 @@ phploc 1.7.1 by Sebastian Bergmann.
 Directories:                                          5
 Files:                                               17
 
-Lines of Code (LOC):                               1257
+Lines of Code (LOC):                               1246
   Cyclomatic Complexity / Lines of Code:           0,07
 Comment Lines of Code (CLOC):                       380
-Non-Comment Lines of Code (NCLOC):                  877
+Non-Comment Lines of Code (NCLOC):                  866
 
 Namespaces:                                           6
 Interfaces:                                           2
@@ -32,18 +32,18 @@ Constants:                                           12
   Global constants:                                   0
   Class constants:                                   12
 
-/home/ronan/Workspace/github/ShakeTheNations/src/ShakeTheNations/Console/Command/BaseCommand.php:23	Avoid unused parameters such as '$input'.
-/home/ronan/Workspace/github/ShakeTheNations/src/ShakeTheNations/Console/Command/BaseCommand.php:23	Avoid unused parameters such as '$output'.
-/home/ronan/Workspace/github/ShakeTheNations/src/ShakeTheNations/Console/Command/BaseCommand.php:50	Avoid unused local variables such as '$notEmpty'.
-/home/ronan/Workspace/github/ShakeTheNations/src/ShakeTheNations/Console/Command/BaseCommand.php:68	Avoid unused local variables such as '$bar'.
-/home/ronan/Workspace/github/ShakeTheNations/src/ShakeTheNations/Console/Command/BaseCommand.php:70	Avoid unused local variables such as '$shakes'.
-/home/ronan/Workspace/github/ShakeTheNations/src/ShakeTheNations/DependencyInjection/Application.php:84	Avoid unused local variables such as '$this'.
-/home/ronan/Workspace/github/ShakeTheNations/src/ShakeTheNations/DependencyInjection/Application.php:97	Avoid variables with short names like $id. Configured minimum length is 3.
-/home/ronan/Workspace/github/ShakeTheNations/src/ShakeTheNations/DependencyInjection/Application.php:102	Avoid variables with short names like $id. Configured minimum length is 3.
-/home/ronan/Workspace/github/ShakeTheNations/src/ShakeTheNations/DependencyInjection/Application.php:107	Avoid variables with short names like $id. Configured minimum length is 3.
+/home/ronan/Workspace/github/ShakeTheNations/src/ShakeTheNations/Console/Command/BaseCommand.php:22	Avoid unused parameters such as '$input'.
+/home/ronan/Workspace/github/ShakeTheNations/src/ShakeTheNations/Console/Command/BaseCommand.php:22	Avoid unused parameters such as '$output'.
+/home/ronan/Workspace/github/ShakeTheNations/src/ShakeTheNations/Console/Command/BaseCommand.php:49	Avoid unused local variables such as '$notEmpty'.
+/home/ronan/Workspace/github/ShakeTheNations/src/ShakeTheNations/Console/Command/BaseCommand.php:67	Avoid unused local variables such as '$bar'.
+/home/ronan/Workspace/github/ShakeTheNations/src/ShakeTheNations/Console/Command/BaseCommand.php:69	Avoid unused local variables such as '$shakes'.
+/home/ronan/Workspace/github/ShakeTheNations/src/ShakeTheNations/DependencyInjection/Application.php:85	Avoid unused local variables such as '$this'.
+/home/ronan/Workspace/github/ShakeTheNations/src/ShakeTheNations/DependencyInjection/Application.php:99	Avoid variables with short names like $id. Configured minimum length is 3.
+/home/ronan/Workspace/github/ShakeTheNations/src/ShakeTheNations/DependencyInjection/Application.php:104	Avoid variables with short names like $id. Configured minimum length is 3.
+/home/ronan/Workspace/github/ShakeTheNations/src/ShakeTheNations/DependencyInjection/Application.php:109	Avoid variables with short names like $id. Configured minimum length is 3.
 /home/ronan/Workspace/github/ShakeTheNations/src/ShakeTheNations/DependencyInjection/ShakeTheNationsExtension.php:11	Avoid unused parameters such as '$configs'.
-/home/ronan/Workspace/github/ShakeTheNations/src/ShakeTheNations/Feeders/EMSCFeeder.php:29	Avoid unused local variables such as '$key'.
-/home/ronan/Workspace/github/ShakeTheNations/src/ShakeTheNations/Feeders/EMSCFeeder.php:32	Avoid unused local variables such as '$distanceFromLocation'.
+/home/ronan/Workspace/github/ShakeTheNations/src/ShakeTheNations/Feeders/EMSCFeeder.php:28	Avoid unused local variables such as '$key'.
+/home/ronan/Workspace/github/ShakeTheNations/src/ShakeTheNations/Feeders/EMSCFeeder.php:31	Avoid unused local variables such as '$distanceFromLocation'.
 /home/ronan/Workspace/github/ShakeTheNations/src/ShakeTheNations/Helpers/Geo.php:306	Avoid excessively long variable names like $distance_in_kilometers. Keep variable name length under 20.
 /home/ronan/Workspace/github/ShakeTheNations/src/ShakeTheNations/Helpers/Geo.php:414	The method simpleXMLToArray() has a Cyclomatic Complexity of 19. The configured cyclomatic complexity threshold is 10.
 /home/ronan/Workspace/github/ShakeTheNations/src/ShakeTheNations/Helpers/Geo.php:414	The method simpleXMLToArray() has an NPath complexity of 14580. The configured NPath complexity threshold is 200.
@@ -54,11 +54,11 @@ phpcpd 1.4.0 by Sebastian Bergmann.
 Found 1 exact clones with 12 duplicated lines in 2 files:
 
   - /home/ronan/Workspace/github/ShakeTheNations/src/ShakeTheNations/Helpers/Shake.php:31-43
-    /home/ronan/Workspace/github/ShakeTheNations/src/ShakeTheNations/Feeders/EMSCFeeder.php:31-43
+    /home/ronan/Workspace/github/ShakeTheNations/src/ShakeTheNations/Feeders/EMSCFeeder.php:30-42
 
-0.95% duplicated lines out of 1257 total lines of code.
+0.96% duplicated lines out of 1246 total lines of code.
 
-Time: 0 seconds, Memory: 3,50Mb
+Time: 1 second, Memory: 3,50Mb
 PHP_Depend 1.1.0 by Manuel Pichler
 
 
@@ -66,11 +66,3 @@ PHP_Depend 1.1.0 by Manuel Pichler
 Critical error: 
 =============== 
 No output specified.
-   1) ShakeTheNations/DependencyInjection/Application.php
-   2) ShakeTheNations/Console/Command/BaseCommand.php
-   3) ShakeTheNations/Feeders/RENASSFeeder.php
-   4) ShakeTheNations/Feeders/FeederInterface.php
-   5) ShakeTheNations/Feeders/CEAFeeder.php
-   6) ShakeTheNations/Feeders/EMSCFeeder.php
-   7) ShakeTheNations/Feeders/BaseFeeder.php
-   8) ShakeTheNations/Parsers/ParserInterface.php

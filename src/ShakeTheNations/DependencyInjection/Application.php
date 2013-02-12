@@ -76,6 +76,7 @@ class Application extends \Pimple
             $geocoder->registerProviders(array(
                 new \Geocoder\Provider\GoogleMapsProvider($adapter)
             ));
+
             return $geocoder;
         });
 
@@ -84,6 +85,7 @@ class Application extends \Pimple
         $this['feeder'] = function ($this) use ($app) {
             $class = new \ReflectionClass($this['feeder.default']);
             $instance = $class->newInstanceArgs(array($app));
+
             return $instance;
         };
 

@@ -7,7 +7,6 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Output\OutputInterface;
 
-use ShakeTheNations\Feeders\BaseFeeder;
 use ShakeTheNations\Helpers\Validator;
 use ShakeTheNations\Helpers\Shake;
 

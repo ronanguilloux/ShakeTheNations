@@ -2,8 +2,6 @@
 
 namespace ShakeTheNations\Parsers;
 
-use ShakeTheNations\DependencyInjection\Application;
-
 /**
  * Interface implemented by content parser classes.
  */
