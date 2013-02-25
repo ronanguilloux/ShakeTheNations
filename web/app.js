@@ -84,9 +84,17 @@ $(document).ready(function() {
             onCheckPoint: function () {
                 $('#time').text(shakes[this._i].emsc_time);
                 markers[this._i] = new L.marker([shakes[this._i-1].geo_lat, shakes[this._i-1].geo_long]).addTo(map).bindPopup(shakes[this._i-1].bubbleContent);
-               maxIitemsDisplayed = 5;
+               maxIitemsDisplayed = 10;
                 if(markers[this._i - maxIitemsDisplayed]) {
-                    map.removeLayer(markers[this._i - maxIitemsDisplayed])
+
+                    // raw removing
+                    //map.removeLayer(markers[this._i - maxIitemsDisplayed])
+
+                    // progressive removing: each marker fades out in $maxIitemsDisplayed steps :
+                    for(i = maxIitemsDisplayed; i > 0; i--) {
+                        markers[this._i - i].setOpacity(1-(i*0.1));
+                    }
+
                 }
             }
         });
