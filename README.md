@@ -48,7 +48,9 @@ Where to find Sismicity information online ?
 * http://www-dase.cea.fr/
 
 
-Contributors
-------------
+Credits
+-------
+* Aaron Ogle (https://github.com/atogle) for its [forked openplans/Leaflet.AnimatedMarker project](https://github.com/openplans/Leaflet.AnimatedMarker)
+* Ronan Guilloux <ronan.guilloux@gmail.com>
+* [All contributors](https://github.com/ronanguilloux/ShakeTheNations/contributors)
 
-* @arno_u_loginlux

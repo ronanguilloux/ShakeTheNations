@@ -1,0 +1,32 @@
+<!doctype html>
+<html ng-app>
+  <head>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.5/leaflet.css" />
+    <style type="text/css">
+      html { height: 100% }
+      body { height: 100%; margin: 0; padding: 0 }
+    </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.5/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="http://cdn.leafletjs.com/leaflet-0.5/leaflet.js"></script>
+    
+    <script src="app.js"></script>
+  </head>
+  <body>    
+    <div style="display:none">
+        <label>min. latitude:</label>
+        <input type="text" ng-model="minLat" placeholder="Enter a min. latitude here">
+        <br><label>max. latitude:</label>
+        <input type="text" ng-model="maxLat" placeholder="Enter a max. latitude here">
+        <br><label>min. longitude:</label>
+        <input type="text" ng-model="minLong" placeholder="Enter a min. longitude here">
+        <br><label>max. longitude:</label>
+        <input type="text" ng-model="maxLong" placeholder="Enter a max. longitude here">
+        <hr />
+        <span>from {{minLat}} to {{maxLat}}, from {{minLong}} to {{maxLong}}</span>
+    </div>
+    <div id="map" style="width: 600px; height: 400px"></div>
+    <div id="time"></div>
+  </body>
+</html>
